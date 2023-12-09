@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  enclosure: one
+  temperature: 1.5
+  reading_type: MyString
+  recorded_at: 2023-12-06 16:57:36
+
+two:
+  enclosure: two
+  temperature: 1.5
+  reading_type: MyString
+  recorded_at: 2023-12-06 16:57:36
