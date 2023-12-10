@@ -5,21 +5,31 @@ const EnclosuresContext = createContext()
 
 function Provider({ children }) {
   const [enclosures, setEnclosures] = useState([]);
+  const [isGlobalLocked, setIsGlobalLocked] = useState(true);
+
+  const toggleGlobalLock = () => {
+    setIsGlobalLocked(!isGlobalLocked)
+  }
 
   const API_URL = "http://localhost:3000/api/v1/enclosures";
+  const MIN_TEMP = 70;
+  const MAX_TEMP = 105;
 
+  // Fetch API endpoint for index
   const fetchEnclosures = () => {
     return axios.get(API_URL).then((response) => response.data)
   }
+  // Initialize page with all enclosures
   useEffect(() => {
     let mounted = true;
-    fetchEnclosures().then((items) => {
+    fetchEnclosures().then((enclosures) => {
       if (mounted) {
-        setEnclosures(items);
+        setEnclosures(enclosures);
       }
     })
     return () => (mounted = false);
   }, []);
+  // CRUD operations for enclosures
   const createEnclosure = async (enclosureData) => {
     try {
       const response = await axios.post(API_URL, { enclosure: enclosureData })
@@ -50,11 +60,33 @@ function Provider({ children }) {
     }
   };
 
+  // Temperature control
+  const updateTemperature = async (id, newTemp) => {
+    if (newTemp >= MIN_TEMP && newTemp <= MAX_TEMP) {
+      try {
+        const response = await axios.put(`${API_URL}/${id}`, { target_temperature: newTemp })
+        console.log(response.data)
+        setEnclosures(enclosures => {
+          return enclosures.map(enclosure =>
+            enclosure.id === id ? { ...enclosure, target_temperature: newTemp } : enclosure
+          )
+        })
+      } catch (error) {
+        console.error("Error updating temperature: ", error)
+      }
+    }
+  }
+
   const sharedFunctions = {
     enclosures, 
+    MIN_TEMP,
+    MAX_TEMP,
+    isGlobalLocked,
+    toggleGlobalLock,
     createEnclosure,
     deleteEnclosure,
     editEnclosure,
+    updateTemperature,
     fetchEnclosures
   }
 

@@ -1,0 +1,47 @@
+/* Style for the container */
+.enclosure-wrapper {
+  text-align: center;
+}
+
+.enclosure-name {
+  font-weight: bold;
+  font-size: 1.5em;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.temp-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.show-enclosures {
+  margin: 2em;
+  border: 5px solid black;
+}
+
+.lock-icon, .svg-icon {
+  width: 1.5em;
+  height: 1.5em;
+  cursor: pointer;
+  margin: 0.25em;
+}
+
+.svg-icon.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: default;
+}
+
+.create-form-wrapper {
+  display: flex;
+  align-items: center;
+  /* Vertically center align items */
+  justify-content: space-between;
+  /* Adjust as needed, e.g., space-between, center, etc. */
+}
+.target-temp {
+  font-size: 2.5em;
+}
