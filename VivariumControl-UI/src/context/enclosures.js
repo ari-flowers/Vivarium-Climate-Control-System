@@ -4,13 +4,19 @@ import axios from 'axios'
 const EnclosuresContext = createContext()
 
 function Provider({ children }) {
+  //State variables
   const [enclosures, setEnclosures] = useState([]);
   const [isGlobalLocked, setIsGlobalLocked] = useState(true);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
 
-  const toggleGlobalLock = () => {
-    setIsGlobalLocked(!isGlobalLocked)
+  const handleOpenCreateModal = () => {
+    setIsCreateModalOpen(true)
+  }
+  const handleCloseCreateModal = () => {
+    setIsCreateModalOpen(false)
   }
 
+  //Global variables
   const API_URL = "http://localhost:3000/api/v1/enclosures";
   const MIN_TEMP = 70;
   const MAX_TEMP = 105;
@@ -29,12 +35,17 @@ function Provider({ children }) {
     })
     return () => (mounted = false);
   }, []);
+  //Lock and unlock functionality 
+  const toggleGlobalLock = () => {
+    setIsGlobalLocked(!isGlobalLocked)
+  }
   // CRUD operations for enclosures
   const createEnclosure = async (enclosureData) => {
     try {
       const response = await axios.post(API_URL, { enclosure: enclosureData })
       setEnclosures(enclosures => [...enclosures, response.data]);
       console.log(response.data)
+      handleCloseCreateModal();
     } catch (error) {
       console.error("Error creating new enclosure: ", error)
     }
@@ -83,6 +94,9 @@ function Provider({ children }) {
     MAX_TEMP,
     isGlobalLocked,
     toggleGlobalLock,
+    isCreateModalOpen,
+    handleOpenCreateModal,
+    handleCloseCreateModal,
     createEnclosure,
     deleteEnclosure,
     editEnclosure,

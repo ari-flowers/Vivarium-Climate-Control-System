@@ -1,0 +1,19 @@
+/* HamburgerMenu.css */
+.hamburger-menu {
+  position: relative;
+}
+
+.hamburger-icon {
+  cursor: pointer;
+  /* Add styling for the icon */
+}
+
+.menu-options {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  top: 100%;
+  /* Style as needed */
+}

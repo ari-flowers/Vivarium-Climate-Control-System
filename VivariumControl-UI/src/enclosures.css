@@ -39,7 +39,7 @@
   display: flex;
   align-items: center;
   /* Vertically center align items */
-  justify-content: space-between;
+  justify-content: center;
   /* Adjust as needed, e.g., space-between, center, etc. */
 }
 .target-temp {
