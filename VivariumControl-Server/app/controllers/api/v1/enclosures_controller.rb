@@ -46,12 +46,18 @@ class Api::V1::EnclosuresController < ApplicationController
 
   # ESP32 /api/v1/esp32
   def esp32
-    response = []
-    Enclosure.all.each do |e| 
-      response << {e.name => e.target_temperature}
+    response = Enclosure.all.collect do |enclosure| 
+      sensors_data = enclosure.sensors.collect do |sensor|
+        { sensor_id: sensor.sensor_id, type: sensor.type }
+      end
+      {
+        enclosure_name: enclosure.name,
+        target_temperature: enclosure.target_temperature,
+        sensors: sensors_data
+      }
     end
-    p response
-    render :json => response
+
+    render json: response
   end
 
   private

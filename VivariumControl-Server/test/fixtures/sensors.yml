@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sensor_id: 1
+  type: 1
+  enclosure: one
+
+two:
+  sensor_id: 1
+  type: 1
+  enclosure: two
