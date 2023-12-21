@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
+      get "/esp32_get", to: 'enclosures#esp32_get'
       resources :enclosures do
         resources :temperature_readings
       end

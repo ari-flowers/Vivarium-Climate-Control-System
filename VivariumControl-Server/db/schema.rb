@@ -10,19 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_07_021839) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_10_061902) do
   create_table "enclosures", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "target_temperature", default: 86.0
   end
 
   create_table "temperature_readings", force: :cascade do |t|
     t.integer "enclosure_id", null: false
-    t.float "temperature"
-    t.string "reading_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "hot_side_temp"
+    t.float "cool_side_temp"
+    t.float "element_temp"
     t.index ["enclosure_id"], name: "index_temperature_readings_on_enclosure_id"
   end
 

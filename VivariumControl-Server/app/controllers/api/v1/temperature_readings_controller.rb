@@ -10,7 +10,13 @@ class Api::V1::TemperatureReadingsController < ApplicationController
 
   # GET /enclosures/:enclosure_id/temperature_readings/:id
   def show
-    render json: @temperature_reading
+    render json: {
+      id: @temperature_reading.id,
+      enclosure_id: @temperature_reading.enclosure_id,
+      hot_side_temp: @temperature_reading.hot_side_temp,
+      cool_side_temp: @temperature_reading.cool_side_temp,
+      element_temp: @temperature_reading.element_temp
+  }
   end
 
   # POST /enclosures/:enclosure_id/temperature_readings
@@ -18,16 +24,30 @@ class Api::V1::TemperatureReadingsController < ApplicationController
     @temperature_reading = @enclosure.temperature_readings.new(temperature_reading_params)
 
     if @temperature_reading.save
-      render json: @temperature_reading, status: :created, location: api_v1_enclosure_temperature_reading_url(@enclosure, @temperature_reading)
+      render json: {
+        id: @temperature_reading.id,
+        enclosure_id: @temperature_reading.enclosure_id,
+        hot_side_temp: @temperature_reading.hot_side_temp,
+        cool_side_temp: @temperature_reading.cool_side_temp,
+        element_temp: @temperature_reading.element_temp
+        # Include other fields if necessary
+      }, status: :created
     else
       render json: @temperature_reading.errors, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /enclosures/:enclosure_id/temperature_readings/:id
+ # PATCH/PUT /enclosures/:enclosure_id/temperature_readings/:id
   def update
     if @temperature_reading.update(temperature_reading_params)
-      render json: @temperature_reading
+      render json: {
+        id: @temperature_reading.id,
+        enclosure_id: @temperature_reading.enclosure_id,
+        hot_side_temp: @temperature_reading.hot_side_temp,
+        cool_side_temp: @temperature_reading.cool_side_temp,
+        element_temp: @temperature_reading.element_temp
+        # Include other fields if necessary
+      }
     else
       render json: @temperature_reading.errors, status: :unprocessable_entity
     end
@@ -49,6 +69,6 @@ class Api::V1::TemperatureReadingsController < ApplicationController
   end
 
   def temperature_reading_params
-    params.require(:temperature_reading).permit(:temperature, :reading_type)
+    params.require(:temperature_reading).permit(:hot_side_temp, :cool_side_temp, :element_temp)
   end
 end

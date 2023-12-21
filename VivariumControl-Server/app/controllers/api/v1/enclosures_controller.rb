@@ -9,7 +9,14 @@ class Api::V1::EnclosuresController < ApplicationController
 
   # GET /api/v1/enclosures/:id
   def show
-    render json: @enclosure
+    enclosure = Enclosure.find(params[:id])
+    render json: {
+      id: enclosure.id,
+      name: enclosure.name,
+      target_temperature: enclosure.target_temperature,
+      created_at: enclosure.created_at,
+      updated_at: enclosure.updated_at
+    }
   end
 
   # POST /api/v1/enclosures
@@ -37,6 +44,16 @@ class Api::V1::EnclosuresController < ApplicationController
     @enclosure.destroy
   end
 
+  # ESP32 /api/v1/esp32
+  def esp32
+    response = []
+    Enclosure.all.each do |e| 
+      response << {e.name => e.target_temperature}
+    end
+    p response
+    render :json => response
+  end
+
   private
 
   def set_enclosure
@@ -44,7 +61,6 @@ class Api::V1::EnclosuresController < ApplicationController
   end
 
   def enclosure_params
-    # Add any other parameters you need
-    params.require(:enclosure).permit(:name, :other_attributes)
+    params.require(:enclosure).permit(:name, :target_temperature, :other_attributes)
   end
 end
