@@ -20,6 +20,8 @@ class Api::V1::TemperatureReadingsController < ApplicationController
   end
 
   # POST /enclosures/:enclosure_id/temperature_readings
+  # Sample POST body
+  # { enclosure_id: 1, hot_side_temp: 86.0, cool_side_temp: 75.0, element_temp: 96.5 }
   def create
     @temperature_reading = @enclosure.temperature_readings.new(temperature_reading_params)
 
@@ -30,7 +32,6 @@ class Api::V1::TemperatureReadingsController < ApplicationController
         hot_side_temp: @temperature_reading.hot_side_temp,
         cool_side_temp: @temperature_reading.cool_side_temp,
         element_temp: @temperature_reading.element_temp
-        # Include other fields if necessary
       }, status: :created
     else
       render json: @temperature_reading.errors, status: :unprocessable_entity
@@ -46,7 +47,6 @@ class Api::V1::TemperatureReadingsController < ApplicationController
         hot_side_temp: @temperature_reading.hot_side_temp,
         cool_side_temp: @temperature_reading.cool_side_temp,
         element_temp: @temperature_reading.element_temp
-        # Include other fields if necessary
       }
     else
       render json: @temperature_reading.errors, status: :unprocessable_entity

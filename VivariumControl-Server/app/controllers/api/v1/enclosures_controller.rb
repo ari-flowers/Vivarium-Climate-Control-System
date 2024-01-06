@@ -45,6 +45,7 @@ class Api::V1::EnclosuresController < ApplicationController
   end
 
   # ESP32 /api/v1/esp32
+  # Endpoint for updating the ESP32 config file.
   def esp32
     response = Enclosure.all.collect do |enclosure| 
       sensors_data = enclosure.sensors.collect do |sensor|
